@@ -6,6 +6,8 @@ from shapes.cube import Cube
 from shapes.line import Line
 from shapes.polygon import Polygon
 
+ALOT = 1e6
+
 
 class Camera:
     def __init__(self, elem: []):
@@ -92,9 +94,12 @@ class Camera:
                     line: Line = line.trim_line().scale_line(self.scale).project_to2_d(distance_from_camera) \
                         .move_to_center(screen_width, screen_height).revert_coordinates(screen_height)
                     if line.a[2] >= 0 and line.b[2] >= 0:
-                        points.append((line.a[0], line.a[1]))
-                        points.append((line.b[0], line.b[1]))
-                pygame.draw.polygon(screen, polygon.color, points)
+                        points.append((max(min(line.a[0], ALOT), -ALOT), max(min(line.a[1], ALOT), -ALOT)))
+                        points.append((max(min(line.b[0], ALOT), -ALOT), max(min(line.b[1], ALOT), -ALOT)))
+                try:
+                    pygame.draw.polygon(screen, polygon.color, points)
+                except:
+                    pass
 
     def __sort_polygons(self):
         sorted_polygon_list = []
