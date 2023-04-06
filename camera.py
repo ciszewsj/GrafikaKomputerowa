@@ -1,4 +1,3 @@
-import sys
 from math import cos, sin
 
 import pygame
@@ -102,5 +101,5 @@ class Camera:
         for elem in self.screen_elems:
             elem: Cube = elem
             sorted_polygon_list += elem.polygon_list
-        sorted_polygon_list = sorted(sorted_polygon_list)
+        sorted_polygon_list = sorted(sorted_polygon_list, key=lambda x: x.distance(), reverse=True)
         return sorted_polygon_list

@@ -31,11 +31,11 @@ class Line:
         return Line([x1, y1, z1], [x2, y2, z2])
 
     def project_to2_d(self, distance_from_camera):
-        x1 = numpy.float64(self.a[0]) / self.a[2] * distance_from_camera
-        y1 = numpy.float64(self.a[1]) / self.a[2] * distance_from_camera
+        x1 = numpy.float64(self.a[0]) / numpy.float64(self.a[2]) * numpy.float64(distance_from_camera)
+        y1 = numpy.float64(self.a[1]) / numpy.float64(self.a[2]) * numpy.float64(distance_from_camera)
         z1 = numpy.float64(self.a[2])
-        x2 = numpy.float64(self.b[0]) / self.b[2] * distance_from_camera
-        y2 = numpy.float64(self.b[1]) / self.b[2] * distance_from_camera
+        x2 = numpy.float64(self.b[0]) / numpy.float64(self.b[2]) * numpy.float64(distance_from_camera)
+        y2 = numpy.float64(self.b[1]) / numpy.float64(self.b[2]) * numpy.float64(distance_from_camera)
         z2 = numpy.float64(self.b[2])
 
         return Line([x1, y1, z1], [x2, y2, z2])

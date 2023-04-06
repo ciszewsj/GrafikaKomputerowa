@@ -1,3 +1,5 @@
+import random
+
 from shapes.line import Line
 
 
@@ -51,26 +53,6 @@ class Polygon:
             i += 1
         return new_polygon
 
-    # def __gt__(self, other):
-    #     if type(other) == Polygon:
-    #         other: Polygon = other
-    #         centroid = self.__find_midpoint()
-    #         other_centroid = other.__find_midpoint()
-    #         distance = centroid[0] ** 2 + centroid[1] ** 2 + centroid[2] ** 2
-    #         other_distance = other_centroid[0] ** 2 + other_centroid[1] ** 2 + other_centroid[2] ** 2
-    #         print(int(other_distance - distance))
-    #         return int(other_distance - distance)
-    #     else:
-    #         raise TypeError("Not comparable")
-
-    def __lt__(self, other):
-        if type(other) == Polygon:
-            other: Polygon = other
-            centroid = self.__find_midpoint()
-            other_centroid = other.__find_midpoint()
-            distance = centroid[0] ** 2 + centroid[1] ** 2 + centroid[2] ** 2
-            other_distance = other_centroid[0] ** 2 + other_centroid[1] ** 2 + other_centroid[2] ** 2
-            print(int(other_distance - distance))
-            return int(distance - other_distance)
-        else:
-            raise TypeError("Not comparable")
+    def distance(self) -> int:
+        centroid = self.__find_midpoint()
+        return int(centroid[0] ** 2 + centroid[1] ** 2 + centroid[2] ** 2)
