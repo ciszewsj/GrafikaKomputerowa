@@ -1,8 +1,11 @@
+import sys
 from math import cos, sin
 
 import pygame
 
+from shapes.cube import Cube
 from shapes.line import Line
+from shapes.polygon import Polygon
 
 
 class Camera:
@@ -67,15 +70,37 @@ class Camera:
     def scale_down(self):
         self.scale -= self.scaling_step
 
-    def draw(self, screen, distance_from_camera, screen_width, screen_height):
+    def draw(self, screen, distance_from_camera, screen_width, screen_height, z1=False):
+        if z1:
+            for elem in self.screen_elems:
+                for line in elem.line_list:
+                    line: Line = line
+                    line = line.trim_line().scale_line(self.scale).project_to2_d(distance_from_camera) \
+                        .move_to_center(screen_width, screen_height).revert_coordinates(screen_height)
+                    x1 = line.a[0]
+                    y1 = line.a[1]
+                    x2 = line.b[0]
+                    y2 = line.b[1]
+                    if line.a[2] >= 0 and line.b[2] >= 0:
+                        pygame.draw.line(screen, elem.color, (x1, y1), (x2, y2))
+        else:
+            sorted_polygons = self.__sort_polygons()
+            for polygon in sorted_polygons:
+                polygon: Polygon = polygon
+                polygon = polygon.change_line_order()
+                points = []
+                for line in polygon.line_list:
+                    line: Line = line.trim_line().scale_line(self.scale).project_to2_d(distance_from_camera) \
+                        .move_to_center(screen_width, screen_height).revert_coordinates(screen_height)
+                    if line.a[2] >= 0 and line.b[2] >= 0:
+                        points.append((line.a[0], line.a[1]))
+                        points.append((line.b[0], line.b[1]))
+                pygame.draw.polygon(screen, polygon.color, points)
+
+    def __sort_polygons(self):
+        sorted_polygon_list = []
         for elem in self.screen_elems:
-            for line in elem.line_list:
-                line: Line = line
-                line = line.trim_line().scale_line(self.scale).project_to2_d(distance_from_camera) \
-                    .move_to_center(screen_width, screen_height).revert_coordinates(screen_height)
-                x1 = line.a[0]
-                y1 = line.a[1]
-                x2 = line.b[0]
-                y2 = line.b[1]
-                if line.a[2] >= 0 and line.b[2] >= 0:
-                    pygame.draw.line(screen, elem.color, (x1, y1), (x2, y2))
+            elem: Cube = elem
+            sorted_polygon_list += elem.polygon_list
+        sorted_polygon_list = sorted(sorted_polygon_list)
+        return sorted_polygon_list

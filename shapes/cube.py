@@ -3,6 +3,7 @@ import pygame.draw
 from pygame import Surface
 
 from shapes.line import Line
+from shapes.polygon import Polygon
 
 
 class Cube:
@@ -17,6 +18,7 @@ class Cube:
 
         self.__init_point_list(xd, xy, xz)
         self.__init_lines()
+        self.__init_polygons()
 
     def __init_point_list(self, xd, xy, xz):
         d = self.distance_between_points / 2.0
@@ -47,6 +49,20 @@ class Cube:
         self.line_list.append(Line(self.point_list[0], self.point_list[3]))
         self.line_list.append(Line(self.point_list[4], self.point_list[7]))
         self.line_list.append(Line(self.point_list[3], self.point_list[7]))
+
+    def __init_polygons(self):
+        self.polygon_list.append(
+            Polygon([self.line_list[0], self.line_list[5], self.line_list[1], self.line_list[2]], color=self.color))
+        self.polygon_list.append(
+            Polygon([self.line_list[10], self.line_list[1], self.line_list[4], self.line_list[7]], color=self.color))
+        self.polygon_list.append(
+            Polygon([self.line_list[11], self.line_list[7], self.line_list[8], self.line_list[6]], color=self.color))
+        self.polygon_list.append(
+            Polygon([self.line_list[9], self.line_list[0], self.line_list[3], self.line_list[6]], color=self.color))
+        self.polygon_list.append(
+            Polygon([self.line_list[2], self.line_list[10], self.line_list[11], self.line_list[9]], color=self.color))
+        self.polygon_list.append(
+            Polygon([self.line_list[3], self.line_list[5], self.line_list[4], self.line_list[8]], color=self.color))
 
     def draw_points(self, screen: Surface):
         pygame.draw.circle(screen, (200, 0, 0), (150.0, 75.0), 20)
