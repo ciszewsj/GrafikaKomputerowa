@@ -80,6 +80,6 @@ while active:
             if event.key == K_v:
                 camera.scale_up()
     pygame.draw.rect(window, (0, 0, 0), (0, 0, WINDOW_X_SIZE, WINDOW_Y_SIZE))
-    camera.draw(window, 450, WINDOW_X_SIZE, WINDOW_Y_SIZE)
+    camera.draw(window, 450, WINDOW_X_SIZE, WINDOW_Y_SIZE, z1=False)
     pygame.display.update()
     clock.tick(1000)
