@@ -1,5 +1,4 @@
 import math
-import random
 
 import pygame
 from pygame import Surface
@@ -16,7 +15,7 @@ class FongBall:
         self.spec_pow = 3
 
         self.light_col = [0.72, 0.45, 0.2]
-        self.light_pos = [600, -100, 500]
+        self.light_pos = [200, 400, 500]
 
         self.width = width
         self.height = height
@@ -128,3 +127,9 @@ class FongBall:
         for i in range(len(vector_1)):
             result += vector_1[i] * vector_2[i]
         return result
+
+    def move_light_pos_x(self, l):
+        self.light_pos[0] += l * 50
+
+    def move_light_pos_y(self, l):
+        self.light_pos[1] += l * 50
