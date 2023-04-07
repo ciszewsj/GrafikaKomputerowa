@@ -4,13 +4,13 @@ import pygame
 from pygame import Surface
 
 
-class FongBall:
+class PhongBall:
     def __init__(self, width=400, height=400):
         self.k_a = [0.49, 0.473, 0.422]
         self.k_d = [0.90, 0.97, 0.98]
         self.k_s = [0.956, 0.937, 0.986]
 
-        self.eye = [0, 0, 100]
+        self.eye = [0, 0, 200]
 
         self.spec_pow = 3
 

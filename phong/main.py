@@ -1,14 +1,14 @@
 import pygame
 from pygame import K_r, K_d, K_a, K_w, K_s
 
-from fong.fong_ball import FongBall
+from phong.phong_ball import PhongBall
 
 WINDOW_X_SIZE = 400
 WINDOW_Y_SIZE = 400
 
 window = pygame.display.set_mode((WINDOW_X_SIZE, WINDOW_Y_SIZE))
 active = True
-ball = FongBall()
+ball = PhongBall()
 
 refresh = True
 
