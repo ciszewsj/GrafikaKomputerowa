@@ -1,4 +1,5 @@
 import math
+import random
 
 import pygame
 from pygame import Surface
@@ -6,15 +7,10 @@ from pygame import Surface
 
 class PhongBall:
     def __init__(self, width=400, height=400):
-        self.k_a = [0.49, 0.473, 0.422]
-        self.k_d = [0.90, 0.97, 0.98]
-        self.k_s = [0.956, 0.937, 0.986]
+        self.__default()
 
         self.eye = [0, 0, 200]
-
-        self.spec_pow = 3
-
-        self.light_col = [0.72, 0.45, 0.2]
+        self.light_col = [0.27, 0.50, 0.70]
         self.light_pos = [200, 400, 500]
 
         self.width = width
@@ -128,8 +124,37 @@ class PhongBall:
             result += vector_1[i] * vector_2[i]
         return result
 
-    def move_light_pos_x(self, l):
-        self.light_pos[0] += l * 50
+    def move_light_pos_x(self, direction):
+        self.light_pos[0] += direction * 50
 
-    def move_light_pos_y(self, l):
-        self.light_pos[1] += l * 50
+    def move_light_pos_y(self, direction):
+        self.light_pos[1] += direction * 50
+
+    def change_material(self, option: int):
+        if option == 0:
+            self.__wood()
+        elif option == 1:
+            self.__default()
+        elif option == 2:
+            self.__random()
+
+    def __wood(self):
+        self.k_a = [1.000000, 1.000000, 1.000000]
+        self.k_d = [0.640000, 0.640000, 0.640000]
+        self.k_s = [0.500000, 0.500000, 0.500000]
+        self.spec_pow = 100
+
+    def __default(self):
+        self.k_a = [0.49, 0.473, 0.422]
+        self.k_d = [0.90, 0.97, 0.98]
+        self.k_s = [0.956, 0.937, 0.986]
+        self.spec_pow = 3
+
+    def __random(self):
+        self.k_a = [random.randint(1, 2000) / 2000, random.randint(1, 2000) / 2000, random.randint(1, 2000) / 2000]
+        self.k_d = [random.randint(1, 2000) / 2000, random.randint(1, 2000) / 2000, random.randint(1, 2000) / 2000]
+        self.k_s = [random.randint(1, 2000) / 2000, random.randint(1, 2000) / 2000, random.randint(1, 2000) / 2000]
+        self.spec_pow = random.randint(1, 10)
+
+        self.light_col = [random.randint(1, 2000) / 2000, random.randint(1, 2000) / 2000, random.randint(1, 2000) / 2000]
+
