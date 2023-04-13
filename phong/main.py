@@ -1,3 +1,5 @@
+import json
+
 import pygame
 from pygame import K_r, K_d, K_a, K_w, K_s, K_1, K_2, K_3
 
@@ -10,7 +12,10 @@ window = pygame.display.set_mode((WINDOW_X_SIZE, WINDOW_Y_SIZE))
 active = True
 ball = PhongBall()
 
+table = None
+
 refresh = True
+config_file = "config.json"
 
 while active:
     for event in pygame.event.get():
@@ -18,6 +23,9 @@ while active:
             active = False
         if event.type == pygame.KEYDOWN:
             if event.key == K_r:
+                with open(config_file, "r") as r:
+                    table = json.loads(r.read())
+                ball.update_colors(table)
                 refresh = True
             if event.key == K_a:
                 ball.move_light_pos_x(-1)

@@ -53,6 +53,64 @@ class Polygon:
             i += 1
         return new_polygon
 
+    def get_points(self):
+        points = []
+        for line in self.line_list:
+            if line.a not in points:
+                points.append(line.a)
+            if line.b not in points:
+                points.append(line.b)
+        return points
+
     def distance(self) -> int:
         centroid = self.__find_midpoint()
         return int(centroid[0] ** 2 + centroid[1] ** 2 + centroid[2] ** 2)
+
+    def __get_plane_from_polygon(self):
+        points = self.get_points()
+        x1 = points[0][0]
+        y1 = points[0][1]
+        z1 = points[0][2]
+
+        x2 = points[1][0]
+        y2 = points[1][1]
+        z2 = points[1][2]
+
+        x3 = points[2][0]
+        y3 = points[2][1]
+        z3 = points[2][2]
+
+        ux = x2 - x1
+        uy = y2 - y1
+        uz = z2 - z1
+        vx = x3 - x1
+        vy = y3 - y1
+        vz = z3 - z1
+
+        a = uy * vz - uz * vy
+        b = uz * vx - ux * vz
+        c = ux * vy - uy * vx
+        d = (-a * x1 - b * y1 - c * z1)
+
+        return [a, b, c, d]
+
+    @staticmethod
+    def __point_matrix_multiplication(matrix, point) -> float:
+        return matrix[0] * point[0] + matrix[1] * point[1] + matrix[2] * point[2] + matrix[3]
+
+    def __check_point_side_against_plane(self, matrix, point):
+        return self.__point_matrix_multiplication(matrix, point) * self.__point_matrix_multiplication(matrix, [0, 0, 0])
+
+    def __is_point_on_observable_site(self, other):
+        result = self.__check_point_side_against_plane(self.__get_plane_from_polygon(), other.__find_midpoint())
+        if result > 0:
+            return -1
+        else:
+            return 1
+
+    def __lt__(self, other):
+        if type(other) is Polygon:
+            other: Polygon = other
+            return self.__is_point_on_observable_site(other)
+        else:
+            return -1

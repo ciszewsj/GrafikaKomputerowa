@@ -58,3 +58,6 @@ class Line:
         y2 = screen_height - self.b[1]
         z2 = self.b[2]
         return Line([x1, y1, z1], [x2, y2, z2])
+
+    def __str__(self):
+        return f"{self.a} - {self.b}"

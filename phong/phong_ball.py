@@ -156,5 +156,12 @@ class PhongBall:
         self.k_s = [random.randint(1, 2000) / 2000, random.randint(1, 2000) / 2000, random.randint(1, 2000) / 2000]
         self.spec_pow = random.randint(1, 10)
 
-        self.light_col = [random.randint(1, 2000) / 2000, random.randint(1, 2000) / 2000, random.randint(1, 2000) / 2000]
+        self.light_col = [random.randint(1, 2000) / 2000, random.randint(1, 2000) / 2000,
+                          random.randint(1, 2000) / 2000]
 
+    def update_colors(self, table):
+        self.k_a = table["k_a"]
+        self.k_d = table["k_d"]
+        self.k_s = table["k_s"]
+        self.spec_pow = table["spec_pow"]
+        self.light_col = table["light_col"]
